@@ -2,6 +2,34 @@
 //  BARRA HOME STAY — script.js (Premium Beach)
 // ============================================
 
+// ---- HAMBURGER MENU ----
+const hamburger    = document.getElementById('nav-hamburger');
+const navLinksMenu = document.querySelector('.nav-links');
+
+if (hamburger && navLinksMenu) {
+  hamburger.addEventListener('click', () => {
+    const isOpen = navLinksMenu.classList.toggle('nav-open');
+    hamburger.setAttribute('aria-expanded', String(isOpen));
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+
+  navLinksMenu.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinksMenu.classList.remove('nav-open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    });
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) {
+      navLinksMenu.classList.remove('nav-open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+  });
+}
+
 // ---- SCROLL PROGRESS ----
 const progressBar = document.getElementById('scroll-progress');
 window.addEventListener('scroll', () => {

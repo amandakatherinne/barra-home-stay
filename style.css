@@ -811,8 +811,194 @@ body.cursor-dark.cursor-hover #cursor-outer { border-color: var(--gold); backgro
   #stats { padding: 0; }
   .reviews-grid { grid-template-columns: 1fr; }
   .cta-btns { flex-direction: column; align-items: center; }
-  #cinema { height: 62vh; }
+  #cinema { height: auto; }
   #whatsapp-fab span { display: none; }
   #whatsapp-fab { padding: 13px; border-radius: 50%; }
   .nav-inner { padding: 0 20px; }
+}
+
+/* ============================================
+   RESPONSIVIDADE — MOBILE-FIRST COMPLEMENT
+   ============================================ */
+
+/* ---- CALLOUT UNITY (sem estilo base) ---- */
+.callout-unity {
+  font-size: 0.88rem;
+  font-weight: 300;
+  font-style: italic;
+  color: rgba(228,207,170,0.55);
+  line-height: 1.78;
+  max-width: 480px;
+  margin: 16px auto 0;
+}
+
+/* ---- HAMBURGER BUTTON ---- */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5.5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+.nav-hamburger span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: var(--deep);
+  border-radius: 2px;
+  transition: transform 0.3s var(--ease), opacity 0.2s, background 0.3s;
+  transform-origin: center;
+}
+#nav.dark-nav .nav-hamburger span { background: var(--sand); }
+.nav-hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ---- TABLET (≤ 1024px) — ajustes complementares ---- */
+@media (max-width: 1024px) {
+  .hero-body { padding: 0 48px; }
+  .stat:nth-child(odd)  { border-right: 1px solid var(--border); }
+  .stat:nth-child(3)    { border-bottom: none; }
+  .cinema-video-section { padding: 72px 32px; }
+}
+
+/* ---- MOBILE (≤ 768px) — complementos ---- */
+@media (max-width: 768px) {
+  /* Hamburger visível, CTA do nav oculto */
+  .nav-hamburger { display: flex; }
+  .nav-cta { display: none; }
+
+  /* Nav links → overlay full-screen */
+  .nav-links {
+    display: flex !important;
+    flex-direction: column;
+    position: fixed;
+    top: 54px; left: 0; right: 0; bottom: 0;
+    z-index: 199;
+    background: rgba(243,237,229,0.98);
+    backdrop-filter: saturate(180%) blur(24px);
+    -webkit-backdrop-filter: saturate(180%) blur(24px);
+    align-items: center;
+    justify-content: center;
+    gap: 36px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s var(--ease);
+  }
+  .nav-links.nav-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .nav-links .nav-link {
+    font-family: var(--serif);
+    font-size: 2rem;
+    font-style: italic;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-transform: none;
+    color: var(--deep);
+    padding: 8px 0;
+  }
+
+  /* Hero: empurra conteúdo para baixo da nav fixa (54px) */
+  #hero { padding-top: 54px; }
+
+  /* Hero bar: grid 2×2 em vez de flex-wrap */
+  .hero-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 28px;
+  }
+  .hero-spec { flex: unset; }
+
+  /* Cinema: altura natural (vídeo com aspect-ratio já controla) */
+  .cinema-video-section { padding: 64px 24px; }
+
+  /* Gallery: corrige conflito height:380px vs grid-auto-rows:240px */
+  .g-item { height: 240px; }
+
+  /* Gallery: labels sempre visíveis (sem hover em touch) */
+  .g-label { opacity: 1; transform: translateY(0); }
+  .gallery-grid { padding: 0 20px; }
+  .gallery-header { padding: 0 24px 36px; }
+
+  /* Lightbox: touch targets ≥ 48px */
+  #lb-close {
+    width: 52px; height: 52px;
+    top: 10px; right: 10px;
+    font-size: 1.6rem;
+    cursor: pointer;
+  }
+  #lb-prev, #lb-next {
+    width: 56px; height: 56px;
+    font-size: 1.8rem;
+    cursor: pointer;
+  }
+  #lb-prev { left: 8px; }
+  #lb-next { right: 8px; }
+
+  #whatsapp-fab { bottom: 20px; right: 16px; }
+}
+
+/* ---- SMALL PHONES (≤ 480px) ---- */
+@media (max-width: 480px) {
+  .hero-body   { padding: 0 20px; }
+  .hero-title  { margin-top: 20px; margin-bottom: 14px; }
+  .hero-sub    { margin-bottom: 20px; max-width: 100%; }
+  .hero-ctas   { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .hero-bar    { padding: 16px 20px; gap: 14px 20px; }
+  .hs-val      { font-size: 1.2rem; }
+  .hs-lab      { font-size: 0.58rem; }
+
+  #callout       { height: auto; min-height: 0; padding: 56px 20px; }
+  .callout-inner { padding: 0 16px; }
+  .callout-sub   { font-size: 0.88rem; }
+
+  .feat-body   { padding: 36px 20px; }
+  .feat-media  { padding: 10px; }
+
+  .gallery-grid   { padding: 0 12px; gap: 4px; grid-auto-rows: 200px; }
+  .gallery-header { padding: 0 20px 28px; }
+  .g-item         { height: 200px; border-radius: 8px; }
+
+  #como-funciona { padding: 56px 20px; }
+  #simulador     { padding: 56px 20px; }
+  #reviews       { padding: 56px 20px; }
+  #localizacao   { padding: 56px 20px; }
+  #cta-final     { padding: 72px 20px; }
+  #contato       { padding: 32px 12px; min-height: 0; }
+
+  .sim-card      { padding: 24px 18px; }
+  .sim-note      { font-size: 0.68rem; }
+
+  .review-card            { padding: 22px 18px; }
+  .review-card blockquote { font-size: 0.95rem; }
+
+  .loc-list li { gap: 12px; padding: 11px 0; }
+  .loc-d       { font-size: 1.1rem; min-width: 50px; }
+
+  .cta-btns { flex-direction: column; align-items: stretch; }
+  .cta-btns .btn-primary,
+  .cta-btns .btn-outline-light { text-align: center; width: 100%; }
+
+  .contact-card { padding: 28px 16px; border-radius: 14px; }
+
+  .cinema-video-section { padding: 48px 20px; }
+
+  #footer       { padding: 44px 20px 32px; }
+  .footer-inner { gap: 20px; }
+}
+
+/* ---- TOUCH DEVICES: desabilita hover effects ---- */
+@media (hover: none) {
+  .feat-media:hover img                  { transform: none; }
+  .g-item:hover img                      { transform: none; filter: brightness(0.92); }
+  .review-card:hover                     { background: rgba(228,207,170,0.05); border-color: var(--border-dark); }
 }
